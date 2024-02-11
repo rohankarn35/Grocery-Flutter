@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterbloc_shopping/features/cart/UI/cart.dart';
+import 'package:flutterbloc_shopping/features/home/UI/product_tile_widget.dart';
 import 'package:flutterbloc_shopping/features/home/bloc/home_bloc.dart';
 import 'package:flutterbloc_shopping/features/whitelist/ui/whitelist.dart';
 
@@ -13,6 +14,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final HomeBloc homeBloc = HomeBloc();
+
+  @override
+  void initState() {
+    homeBloc.add(HomeInitialEvent());
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
@@ -31,7 +39,18 @@ class _HomeState extends State<Home> {
         // TODO: implement listener
       },
       builder: (context, state) {
-        return Scaffold(
+        switch (state.runtimeType) {
+          case HomeLoadingState:
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+            
+           
+          case HomeLoadedState:
+          final sucessState = state as HomeLoadedState;
+           return Scaffold(
           appBar: AppBar(
             title: const Text('Grocery'),
             actions: [
@@ -45,10 +64,31 @@ class _HomeState extends State<Home> {
                   }, icon: const Icon(Icons.shopping_cart)),
             ],
           ),
-          body: const Center(
-            child: Text('Home'),
-          ),
+          body: ListView.builder(
+            itemCount: sucessState.products.length,
+            
+            itemBuilder: (context,index) {
+            return ProductTileWidget(product: sucessState.products[index], homeBloc: homeBloc,);
+          }),
+          
         );
+         
+          case HomeErrorState:
+          return const Scaffold(
+            body: Center(
+              child: Text('Error'),
+            ),
+          );
+
+         
+          default:
+          return const Scaffold(
+            body: Center(
+              child: Text('Something went wrong!'),
+            ),
+          );
+        }
+       
       },
     );
   }

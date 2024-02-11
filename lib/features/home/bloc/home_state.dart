@@ -9,7 +9,12 @@ final class HomeInitial extends HomeState {}
 
 class HomeLoadingState extends HomeState {}
 
-class HomeLoadedState extends HomeState{}
+class HomeLoadedState extends HomeState{
+  final List<ProductDataModel> products;
+
+  HomeLoadedState({required this.products});
+ 
+}
 
 class HomeErrorState extends HomeState{}
 
