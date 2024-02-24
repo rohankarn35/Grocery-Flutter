@@ -36,7 +36,17 @@ class _HomeState extends State<Home> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const WhitelistPage()));
 
         }
-        // TODO: implement listener
+        else if (state is HomeProductWhitlistedActionState){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to wishlist')));
+        }
+        else if (state is HomeProductCartedActionState){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to cart')));
+        }
+        else if (state is HomeProductCartedActionState){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to cart')));
+        }
+     
+        
       },
       builder: (context, state) {
         switch (state.runtimeType) {

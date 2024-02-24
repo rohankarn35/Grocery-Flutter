@@ -1,9 +1,8 @@
 // ignore_for_file: unnecessary_const
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutterbloc_shopping/data/whitlist_items.dart';
+
 import 'package:flutterbloc_shopping/features/home/bloc/home_bloc.dart';
 import 'package:flutterbloc_shopping/features/home/model/home_product_data_model.dart';
 
